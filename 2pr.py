@@ -6,7 +6,6 @@ users = [
         'password': 'qwerty',
         'role': 'user',
         'history': [],
-        'created_at': '16-12-24'
     },
     {
         'username': 'Админ',
@@ -113,7 +112,7 @@ def menu_admin(b):
     global books
     print('------------')
     print('Выберите действие:\n1. Добавление новой книги\n2. Изменение цену проката книги\n3. Удаление книги\n'
-          '4. Создание нового читателя Выйти\n5. Выйти')
+          '4. Создание нового читателя\n5. Выйти')
     print('-----------------------------------------------------')
     answer = input()
     if answer not in '12345':
@@ -151,14 +150,31 @@ def menu_admin(b):
             for j in range(len(books) - 1):
                 if books in books[j]['title']:
                     del books[j]
-                    print('Тип номера удален!')
+                    print('Книга удалена!')
             menu_admin(b)
         case '4':
-            new_user = input('Введите логие нового читателя: ')
-            new_passw = input('Введите пароль:')
-            users.append({new_user = '',  })
+            while True:
+                username = input("Введите имя пользователя (или Enter для отмены): ")
+                if not username:
+                    return  # Отмена создания пользователя
+                if any(user['username'] == username for user in users):
+                    print("Пользователь с таким именем уже существует.")
+                    continue
+                password = input("Введите пароль: ")
+                if not password:
+                    print("Пароль не может быть пустым.")
+                    continue
+                users.append({
+                    'username': username,
+                    'password': password,
+                    'role': 'user',
+                    'history': []
+                })
+                print(f"Пользователь '{username}' успешно создан!")
+                break
         case '5':
             start(b)
+
 
 
 
